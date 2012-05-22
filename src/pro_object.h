@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_object_h
-#define prosopon_pro_object_h
+#ifndef prosopon_pro_object
+#define prosopon_pro_object
 
 #include "prosopon/core.h"
 
@@ -21,14 +21,7 @@ struct pro_object
             pro_actor_type type;
             pro_behavior* behavior;
             pro_ref data;
-            pro_env_ref env;
         } actor;
-        struct
-        {
-            pro_env_ref env;
-            pro_constructor* constructor;
-            pro_ref data;
-        } constructor;
         struct pro_lookup_list* message;
         struct
         {

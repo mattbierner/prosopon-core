@@ -1,7 +1,6 @@
 #include "prosopon/prosopon.h"
 
 #include "pro_lookup.h"
-#include "pro_env.h"
 #include "pro_common.h"
 #include "pro_message_queue.h"
 #include "pro_state.h"
@@ -17,11 +16,7 @@ pro_error pro_actor_create(pro_state_ref s, pro_actor_type type,
     pro_behavior beh, pro_ref data, PRO_OUT pro_ref* out_ref)
 {
     PRO_API_ASSERT_STATE(s);
-    
-    // Get the current environment
-    pro_env_ref current_env;
-    pro_get_env(s, &current_env);
-    
+        
     // Create a new object
     pro_object* obj = pro_object_new(s, PRO_ACTOR_TYPE, 1);
     
@@ -31,12 +26,6 @@ pro_error pro_actor_create(pro_state_ref s, pro_actor_type type,
     obj->value.actor.behavior = beh;
     pro_retain(s, data);
     obj->value.actor.data = data;
-
-    // Create a new env for this actor with current_env as parent
-    pro_env_create(s, current_env, &(obj->value.actor.env));
-    
-    // Release current env
-    pro_env_release(s, current_env);
 
     pro_ref lookup = pro_lookup_new(s, obj, 1);
     *out_ref = lookup;
@@ -71,7 +60,7 @@ pro_error pro_send(pro_state_ref s, pro_ref actor, pro_ref msg)
         return PRO_OK; // sends to PRO_EMPTY_REF act as a sink
         
     PRO_API_ASSERT_TYPE(actor, PRO_ACTOR_TYPE, PRO_INVALID_OPERATION);
-    pro_message_queue_enqueue(s, s->global->message_queue, msg, actor);
+    pro_message_queue_enqueue(s, s->message_queue, msg, actor);
 
     return PRO_OK;
 }

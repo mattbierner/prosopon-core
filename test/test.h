@@ -1,5 +1,5 @@
-#ifndef prosopon_test_h
-#define prosopon_test_h
+#ifndef prosopon_test
+#define prosopon_test
 
 
 #include "CUnit/Basic.h"

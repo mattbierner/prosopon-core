@@ -1,5 +1,5 @@
-#ifndef prosopon_test_pro_alloc_h
-#define prosopon_test_pro_alloc_h
+#ifndef prosopon_test_pro_alloc
+#define prosopon_test_pro_alloc
 
 #include <stddef.h>
 

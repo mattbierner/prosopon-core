@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_library_h
-#define prosopon_pro_library_h
+#ifndef prosopon_pro_library
+#define prosopon_pro_library
 
 #include "prosopon/core.h"
 
@@ -16,6 +16,7 @@ pro_library_list* pro_library_list_new(pro_state_ref s, const char* file,
 
 /**
  * Has a library been loaded.
+ *
  * @return 0 if false else true
  */
 PRO_INTERNAL

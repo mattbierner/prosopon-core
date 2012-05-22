@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_state_h
-#define prosopon_pro_state_h
+#ifndef prosopon_pro_state
+#define prosopon_pro_state
 
 #include "prosopon/core.h"
 
@@ -9,37 +9,21 @@ struct pro_library_list;
 struct pro_actor_type_info_list;
 
 
-typedef struct pro_state pro_state;
-
-
 /**
  * Structure that holds information about the state of the Prosopon machine
  */
-typedef struct pro_global_state pro_global_state;
-struct pro_global_state
+typedef struct pro_state pro_state;
+struct pro_state
 {
     pro_alloc* alloc; /**< Allocator used to allocate and free all memory. */
     
-    pro_state* main; /**< The main state. */
-
     struct pro_library_list* libraries; /**< The set of loaded libraries. */
     
     struct pro_actor_type_info_list* actor_types; /**< The set of actor types. */
     
     struct pro_message_queue* message_queue; /**< The global message queue. */
-};
-
-
-/**
- * Structure that holds information about an execution environment in the
- * Prosopon machine.
- */
-struct pro_state
-{
-    pro_global_state* global; /**< The global state. */
     
-    pro_env_ref root_env; /**< The root environment for the state. */
-    struct pro_env_stack* stack; /**< The env stack for this state. */
+    const char* const* path;
 };
 
 

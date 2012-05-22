@@ -1,4 +1,4 @@
-#include "pro_library.h"
+    #include "pro_library.h"
 
 #include "prosopon/library.h"
 
@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <limits.h>
 
 
 #pragma mark Private
@@ -20,25 +23,57 @@ struct pro_library_list
     void* handle;
 };
 
-static void initialize_library(pro_state_ref s, void* lib_handle)
+static int initialize_library(pro_state_ref s, const char* name, void* lib_handle)
 {
     assert(lib_handle);
     
-    union { void* d; pro_library_init* f; } u;
-    u.d = dlsym(lib_handle, "prosopon_library_initialization");
-    pro_library_init* init = u.f;
+    char init_sym[256];
+    sprintf(init_sym, "prosopon_library_init_%s", name);
+    
+    union { void* d; prosopon_library_initilization** f; } u;
+    u.d = dlsym(lib_handle, init_sym);
+    prosopon_library_initilization** init = u.f;
     if (!init)
-    {
-        fprintf(stderr, "%s\n", dlerror());
-        exit(EXIT_FAILURE);
-    }
-    init(s);
+        return 0;
+    
+    (*init)(s);
+    return 1;
 }
 
 static void add_loaded_library(pro_state_ref s, const char* file, void* handle)
 {
     pro_library_list* libraries = pro_state_get_libraries(s);
     pro_state_set_libraries(s, pro_library_list_new(s, file, libraries));
+}
+
+static char* get_library_filename(const char* name)
+{
+    char* buf = malloc(sizeof(*buf) * 256);
+    sprintf(buf, "%s.dylib", name);
+    return buf;
+}
+
+static void* open_library(pro_state_ref s, const char* filename)
+{
+    if (s->path == 0)
+        return 0;
+        
+    unsigned int i = 0;
+    for (const char* dirname = s->path[0]; dirname; dirname = s->path[++i])
+    {
+        DIR* dir = opendir(dirname);
+        if (!dir) continue;
+        
+        for (struct dirent* dent; (dent = readdir(dir)); )
+        {
+            char path[PATH_MAX + 1];
+            snprintf(path, PATH_MAX + 1, "%s/%s", dirname, filename);
+            if (access(path, F_OK) == 0)
+                return dlopen(path, RTLD_LOCAL | RTLD_LAZY);
+        }
+    }
+
+    return 0;
 }
 
 #pragma mark -
@@ -88,19 +123,27 @@ void pro_library_list_free(pro_state_ref s, pro_library_list* libraries)
 #pragma mark PRO_API
 
 PRO_API
-pro_error pro_library_load(pro_state_ref s, const char* file)
+pro_error pro_library_load(pro_state_ref s,
+    const char* name, const char* lib_name, PRO_OUT void** out_handle)
 {
-    if (pro_library_loaded(s, file) != 0)
+    if (pro_library_loaded(s, name) != 0)
         return PRO_OK;
     
-    void* handle = dlopen(file, RTLD_LOCAL | RTLD_LAZY);
+    pro_error err = PRO_OK;
+    char* filename = get_library_filename(lib_name);
+    
+    void* handle = open_library(s, filename);
     if (handle)
     {
-        initialize_library(s, handle);
-        add_loaded_library(s, file, handle);
+        if (!initialize_library(s, name, handle))
+            err = PRO_LIBRARY_LOAD_ERROR;
+        else
+            add_loaded_library(s, name, handle);
     }
     else
-        return PRO_LIBRARY_LOAD_ERROR;
+        err = PRO_LIBRARY_LOAD_ERROR;
     
-    return PRO_OK;
+    free(filename);
+    *out_handle = handle;
+    return err;
 }

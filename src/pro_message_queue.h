@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_message_queue_h
-#define prosopon_pro_message_queue_h
+#ifndef prosopon_pro_message_queue
+#define prosopon_pro_message_queue
 
 #include "prosopon/core.h"
 

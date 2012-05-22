@@ -2,9 +2,7 @@
 
 #include "pro_common.h"
 #include "pro_state.h"
-#include "pro_env.h"
 #include "pro_object.h"
-#include "pro_env_lookup.h"
 
 
 #pragma mark Internal

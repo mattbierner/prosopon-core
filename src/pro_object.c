@@ -1,11 +1,9 @@
 #include "pro_object.h"
 
 #include "pro_type.h"
-#include "pro_env.h"
 #include "pro_object.h"
 #include "pro_common.h"
 #include "pro_lookup.h"
-#include "pro_env_lookup.h"
 #include "pro_lookup_list.h"
 
 
@@ -32,7 +30,6 @@ void pro_object_free(pro_state_ref s, pro_object* t)
     {
     case PRO_ACTOR_TYPE:
         pro_release(s, t->value.actor.data);
-        pro_env_release(s, t->value.actor.env);
         break;
     case PRO_LIST_TYPE:
         // Release the message list
@@ -41,10 +38,6 @@ void pro_object_free(pro_state_ref s, pro_object* t)
     case PRO_UD_TYPE:
         // call the ud deconstructor
         t->value.ud.deconstructor(s, t->value.ud.data);
-        break;
-    case PRO_CONSTRUCTOR_TYPE:
-        pro_release(s, t->value.constructor.data);
-        pro_env_release(s, t->value.constructor.env);
         break;
     }
     

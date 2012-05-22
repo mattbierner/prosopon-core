@@ -1,6 +1,5 @@
 #include "pro_type.h"
 
-#include "pro_env.h"
 #include "pro_state.h"
 
 #include <string.h>

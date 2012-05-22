@@ -1,5 +1,5 @@
-#ifndef prosopon_core_h
-#define prosopon_core_h
+#ifndef prosopon_core_core
+#define prosopon_core_core
 
 #ifdef __cplusplus
 extern "C" {
@@ -61,13 +61,16 @@ typedef enum
     /**<
      * The API call completed as expected
      */
-    PRO_OK = 0 ,
+    PRO_OK = 0,
     
     /**<
      * The library failed to allocate more memory to complete the call.
      */
     PRO_OUT_OF_MEMORY,
     
+    /**<
+     * There was an error loading an Prosopon library.
+     */
     PRO_LIBRARY_LOAD_ERROR,
     
     /**<
@@ -80,8 +83,9 @@ typedef enum
      */
     PRO_INVALID_OPERATION,
     
-    PRO_CONSTRUCTOR_ERROR,
-    
+    /**<
+     *
+     */
     PRO_BEHAVIOR_ERROR,
     
     PRO_ERROR_MAX
@@ -95,17 +99,6 @@ typedef enum
  * An opaque reference to state of the prosopon machine.
  */
 typedef struct pro_state* pro_state_ref;
-
-/**
- * An opaque reference to an environment.
- */
-typedef struct pro_env_lookup* pro_env_ref; 
-
-/**
- * Null environment reference.
- */
-PRO_API_DATA pro_env_ref PRO_EMPTY_ENV_REF;
-
 
 /**
  * An opaque reference to an object.
@@ -128,13 +121,6 @@ PRO_API_DATA pro_ref PRO_EMPTY_REF;
 typedef void(pro_behavior)(pro_state_ref,
     pro_ref t, pro_ref msg, pro_ref ud);
 
-/**
- * Function implementing a constructor behavior
- *
- * @return A lookup to the constructed object or null if none.
- */
-typedef pro_ref(pro_constructor)(pro_state_ref,
-    pro_ref arguments, pro_ref ud);
 
 
 #pragma mark Types
@@ -147,7 +133,6 @@ typedef enum
     PRO_NONE_TYPE = 0,
     PRO_LIST_TYPE,
     PRO_ACTOR_TYPE,
-    PRO_CONSTRUCTOR_TYPE,
     PRO_UD_TYPE,
     PRO_TYPE_MAX
 } pro_type;
@@ -176,13 +161,15 @@ typedef void*(pro_alloc)(void* ptr, size_t size);
 /**
  * Creates a new execution state.
  *
+ * @param alloc Memory management function used to allocate and free all memory.
+ * @param path Array of paths to search for libraries.
  * @param[out] state The newly created state.
  *
  * @return Does not return PRO_INVALID_STATE
  *   PRO_OUT_OF_MEMORY if a new state cannot be allocated.
  */
 PRO_API
-pro_error (pro_state_create) (pro_alloc* alloc,
+pro_error (pro_state_create) (pro_alloc* alloc, char* const* path,
     PRO_OUT pro_state_ref* state);
 
 /**
@@ -204,63 +191,6 @@ PRO_API
 pro_error (pro_get_alloc) (pro_state_ref,
     PRO_OUT pro_alloc** alloc);
 
-/**
- * @param[out] env The reference to the current environment with a referance count
- *     of 1.
- */
-PRO_API
-pro_error (pro_get_env) (pro_state_ref,
-    PRO_OUT pro_env_ref* env);
-
-/**
- * Pushes an environment onto the environment stack.
- *
- * @return
- *   PRO_INVALID_OPERATION If pushing an env onto itself.
- *   PRO_OUT_OF_MEMORY If memory cannot be alocated.
- */
-PRO_API
-pro_error (pro_push_env) (pro_state_ref, pro_env_ref);
-
-/**
- * Pops an environment off the environment stack.
- *
- * @return
- *   PRO_INVALID_OPERATION If popping the root environment.
- */
-PRO_API
-pro_error (pro_pop_env) (pro_state_ref);
-
-
-#pragma mark Environment
-
-/**
- * Creates a new environment with a given parent.
- * 
- * @param[out] env A reference to the new environment.
- *
- * @return
- *   PRO_OUT_OF_MEMORY if memory cannot be alocated.
- */
-PRO_API
-pro_error (pro_env_create) (pro_state_ref, pro_env_ref parent,
-    PRO_OUT pro_env_ref* env);
-
-/**
- * Retains a env reference for further use. 
- *
- * @see memory_management.
- */
-PRO_API
-pro_error (pro_env_retain) (pro_state_ref, pro_env_ref);
-
-/**
- * Release an environment for future collection.
- * 
- * @see memory_management.
- */
-PRO_API
-pro_error (pro_env_release) (pro_state_ref, pro_env_ref);
 
 /**
  * Retains a reference for further use.
@@ -279,31 +209,11 @@ PRO_API
 pro_error (pro_release) (pro_state_ref, pro_ref);
 
 /**
- * Resolves an identifier to a object.
- *
- * @param[out] ref The highest resolved reference or PRO_EMPTY_REF if none. 
- *     Increments the reference count of the ref.
- */
-PRO_API
-pro_error (pro_get_binding) (pro_state_ref,
-    pro_env_ref env, const char* name, PRO_OUT pro_ref* ref);
-
-/**
  * @param[out] type The type value of a lookup.
  */
 PRO_API
 pro_error (pro_get_type) (pro_state_ref,
     pro_ref lookup, PRO_OUT pro_type* type);
-
-/**
- * Binds a lookup to an identifier name.
- *
- * @return
- *   PRO_INVALID_OPERATION if ref is PRO_EMPTY_REF.
- *   PRO_OUT_OF_MEMORY if memory cannot be allocated.
- */
-PRO_API
-pro_error (pro_bind) (pro_state_ref, pro_ref ref, const char* id);
 
 /**
  * Enum for status of a match. operation
@@ -347,48 +257,6 @@ pro_error (pro_match) (pro_state_ref, pro_ref, pro_ref ref,
 PRO_API
 pro_error (pro_to_string) (pro_state_ref, pro_ref,
     PRO_OUT pro_ref* ud);
-
-
-#pragma mark Constructor
-
-/**
- * Creates a new constructor.
- *
- * @param impl A function that constructs an object and returns a referance.
- *   Must not be null. The env that the constructor is created in will be current
- *   when this is called. 
- * @param ud User data that is passed to the constructor function.
- *   May be PRO_EMPTY_REF.
- * 
- * @param[out] out_ref A reference to the new constructor with a reference count
- *   of 1.
- *
- * @return
- *   PRO_OK if successful
- *   PRO_INVALID_OPERATION if the state is not valid or id is null.
- *    if impl is null.
- */
-PRO_API
-pro_error (pro_constructor_create) (pro_state_ref, pro_constructor* impl, pro_ref ud,
-    PRO_OUT pro_ref* out_ref);
-
-/**
- * Calls a constructor with a list of arguments.
- * 
- * @param constructor The reference to the constructor to call.
- * @param args A list of lookups to pass to the constructor.
- *
- * @param[out] result The result from the constructor.
- *
- * @return
- *   PRO_OK if successful
- *   PRO_INVALID_STATE
- *    if constructor does reference a constructor.
- *   PRO_CONSTRUCTOR_ERROR if the constructor call fails.
- */
-PRO_API
-pro_error (pro_constructor_call) (pro_state_ref, pro_ref constructor, pro_ref args,
-    PRO_OUT pro_ref* result);
 
 
 #pragma mark List

@@ -1,5 +1,5 @@
-#ifndef prosopon_prosopon_interface_type_h
-#define prosopon_prosopon_interface_type_h
+#ifndef prosopon_core_actor_type
+#define prosopon_core_actor_type
 
 #ifdef __cplusplus
 extern "C" {

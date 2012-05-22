@@ -1,6 +1,5 @@
 #include "prosopon/core.h"
 
-#include "pro_env.h"
 #include "pro_common.h"
 #include "pro_object.h"
 #include "pro_lookup.h"

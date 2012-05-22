@@ -1,5 +1,5 @@
-#ifndef prosopon_h
-#define prosopon_h
+#ifndef prosopon_core_prosopon
+#define prosopon_core_prosopon
 
 /**
  * @mainpage
