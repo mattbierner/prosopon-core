@@ -5,8 +5,6 @@ int main(int argc, char** argv)
 {
     CU_SuiteInfo suites[] = {
         pro_state_test_suite,
-        pro_env_test_suite,
-        pro_constructor_test_suite,
         pro_message_test_suite,
         pro_user_data_test_suite,
         CU_SUITE_INFO_NULL

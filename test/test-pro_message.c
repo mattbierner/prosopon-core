@@ -13,7 +13,7 @@ static pro_state_ref state = 0;
 
 static int init(void)
 {
-    pro_state_create(test_alloc, &state);
+    pro_state_create(test_alloc, 0, &state);
     return state == 0;
 }
 
@@ -90,11 +90,11 @@ static void test_append_invalid(void)
     
     // bad value
     err = pro_list_append(state, msg, PRO_EMPTY_REF, &msg);
-    CU_ASSERT( == err);
+    CU_ASSERT(PRO_INVALID_OPERATION == err);
     
     // bad msg
     err = pro_list_append(state, PRO_EMPTY_REF, actor, &msg);
-    CU_ASSERT( == err);
+    CU_ASSERT(PRO_INVALID_OPERATION == err);
 }
 
 static void test_length_invalid(void)
@@ -111,7 +111,7 @@ static void test_length_invalid(void)
     
     // bad msg
     err = pro_list_length(state, PRO_EMPTY_REF, &len);
-    CU_ASSERT( == err);
+    CU_ASSERT(PRO_INVALID_OPERATION == err);
 }
 
 static void test_get_invalid(void)
@@ -128,7 +128,7 @@ static void test_get_invalid(void)
     
     // bad msg
     err = pro_list_get(state, PRO_EMPTY_REF, 0, &result);
-    CU_ASSERT( == err);
+    CU_ASSERT(PRO_INVALID_OPERATION == err);
 }
 
 static void test_get_out_of_bounds(void)

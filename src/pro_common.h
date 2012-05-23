@@ -12,22 +12,24 @@
 /**
  * @section assertions Assertions
  *
- * Assertions break if false in debug mode, else returns the resulting error.
+ * API assertions break if false in debug mode, else returns the resulting error.
  * Should only be used in PRO_API functions.
  */
 
-
-/**
- * Asserts a condition.
- */
 #ifdef DEBUG
-    #define PRO_API_ASSERT(cond, err) if (!(cond)){ assert(0); return (err); }
+    #define PRO_ASSERT(cond) assert((cond))
 #else 
-    #define PRO_API_ASSERT(cond, err) if (!(cond)) { return (err); } 
+    #define PRO_ASSERT(cond)
 #endif
 
+
 /**
- * Asserts that a given state is valid
+ * API assertion for a condition.
+ */
+#define PRO_API_ASSERT(cond, err) if (!(cond)){ PRO_ASSERT(0); return (err); }
+
+/**
+ * API assertion a given state is valid.
  */
 #define PRO_API_ASSERT_STATE(s) PRO_API_ASSERT((s), PRO_INVALID_STATE)
 

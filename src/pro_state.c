@@ -75,7 +75,7 @@ void pro_state_set_actor_type_info(pro_state* s,
 #pragma mark Public
 
 PRO_API
-pro_error pro_state_create(pro_alloc* alloc, char* const* path,
+pro_error pro_state_create(pro_alloc* alloc, const char** path,
     PRO_OUT pro_state_ref* out_state)
 {
     // Allocate and setup the global state
@@ -102,7 +102,7 @@ pro_error pro_state_release(pro_state_ref s)
     pro_state_free(s);
     
     // Free state structure memory
-    alloc(s, 0);
+    //alloc(s, 0);
     
     return PRO_OK;
 }

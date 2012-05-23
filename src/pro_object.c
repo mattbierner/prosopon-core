@@ -60,7 +60,8 @@ PRO_INTERNAL
 void pro_object_release(pro_state_ref s, pro_object* t)
 {
     if (!t) return;
-    assert(t->ref_count > 0);
+    
+    PRO_ASSERT(t->ref_count > 0);
     
     if (--(t->ref_count) <= 0)
         pro_object_free(s, t);

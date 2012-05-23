@@ -13,7 +13,7 @@ static pro_state_ref state = 0;
 
 static int init(void)
 {
-    pro_state_create(test_alloc, &state);
+    pro_state_create(test_alloc, 0, &state);
     return state == 0;
 }
 

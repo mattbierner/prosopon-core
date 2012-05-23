@@ -23,7 +23,7 @@ struct pro_state
     
     struct pro_message_queue* message_queue; /**< The global message queue. */
     
-    const char* const* path;
+    const char** path;
 };
 
 

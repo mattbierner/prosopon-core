@@ -93,13 +93,13 @@ void pro_lookup_list_append(pro_state_ref s,
 PRO_INTERNAL
 unsigned int pro_lookup_list_length(pro_state_ref s, const pro_ref_list t)
 {
-    return t->size;
+    return (t ? t->size : 0);
 }
 
 PRO_INTERNAL
 pro_ref pro_lookup_list_get(pro_state_ref s, const pro_ref_list t, unsigned int idx)
 {
-    if (idx >= t->size)
+    if (idx >= pro_lookup_list_length(s, t))
         return PRO_EMPTY_REF;
         
     pro_lookup_list_node* list = t->front;

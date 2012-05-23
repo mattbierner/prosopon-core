@@ -79,8 +79,10 @@ pro_error pro_release(pro_state_ref s, pro_ref ref)
     if (pro_lookup_equal(s, ref, PRO_EMPTY_REF))
         return PRO_OK;
     
-    assert(ref->ref_count > 0);
+    // fail if over releasing reference
+    PRO_API_ASSERT(ref->ref_count > 0, PRO_INVALID_OPERATION);
     
+    // actual release the reference
     if (--(ref->ref_count) <= 0)
         pro_lookup_free(s, ref);
     

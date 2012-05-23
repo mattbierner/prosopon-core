@@ -6,6 +6,8 @@
  * @brief Configuration file for prosopon-core build and runtime.
  */
 
+#pragma mark Symbols
+
 #if __llvm__ || __GNUC__ >= 4
     #define PRO_VISIBILITY_PUBLIC __attribute__ ((visibility ("default")))
     #define PRO_VISIBILITY_PRIVATE __attribute__ ((visibility ("hidden")))
@@ -35,5 +37,8 @@
  */
 #define PRO_INTERNAL extern PRO_VISIBILITY_PRIVATE
 
+
+#pragma mark -
+#pragma mark Constants
 
 #endif

@@ -18,7 +18,6 @@
 		899936F3154383490066F40A /* test-user_data.c in Sources */ = {isa = PBXBuildFile; fileRef = 899936F2154383490066F40A /* test-user_data.c */; };
 		89A9818A152136FD00C405FE /* pro_library.c in Sources */ = {isa = PBXBuildFile; fileRef = 89A98189152136FD00C405FE /* pro_library.c */; };
 		89A9818B152136FD00C405FE /* pro_library.c in Sources */ = {isa = PBXBuildFile; fileRef = 89A98189152136FD00C405FE /* pro_library.c */; };
-		89A981921522B4F700C405FE /* test-pro_constructor.c in Sources */ = {isa = PBXBuildFile; fileRef = 89A981901522B4F700C405FE /* test-pro_constructor.c */; };
 		89A981A81524FA6400C405FE /* pro_type.c in Sources */ = {isa = PBXBuildFile; fileRef = 89A981A71524FA6400C405FE /* pro_type.c */; };
 		89A981A91524FA6400C405FE /* pro_type.c in Sources */ = {isa = PBXBuildFile; fileRef = 89A981A71524FA6400C405FE /* pro_type.c */; };
 		89ACBEB7151E960D003EA8EE /* pro_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 89ACBEB6151E960D003EA8EE /* pro_list.c */; };
@@ -35,7 +34,6 @@
 		89F1112F151CD14200317A20 /* pro_lookup.c in Sources */ = {isa = PBXBuildFile; fileRef = 890024CC1511A3070012E749 /* pro_lookup.c */; };
 		89F11130151CD14200317A20 /* pro_object.c in Sources */ = {isa = PBXBuildFile; fileRef = 890024CE1511A3070012E749 /* pro_object.c */; };
 		89F11131151CD14200317A20 /* pro_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 890024D01511A3070012E749 /* pro_state.c */; };
-		89F11139151CEF7D00317A20 /* test-pro_env.c in Sources */ = {isa = PBXBuildFile; fileRef = 89F11138151CEF7D00317A20 /* test-pro_env.c */; };
 		89F1113C151CF41600317A20 /* test-pro_state.c in Sources */ = {isa = PBXBuildFile; fileRef = 89F1113B151CF41600317A20 /* test-pro_state.c */; };
 		89F9542F152E6FE30060B211 /* pro_message_queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 89F9542E152E6FE30060B211 /* pro_message_queue.c */; };
 		89F95430152E6FE30060B211 /* pro_message_queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 89F9542E152E6FE30060B211 /* pro_message_queue.c */; };
@@ -75,7 +73,6 @@
 		899936F2154383490066F40A /* test-user_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-user_data.c"; sourceTree = "<group>"; };
 		89A98186152136EF00C405FE /* pro_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pro_library.h; sourceTree = "<group>"; };
 		89A98189152136FD00C405FE /* pro_library.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pro_library.c; sourceTree = "<group>"; };
-		89A981901522B4F700C405FE /* test-pro_constructor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-pro_constructor.c"; sourceTree = "<group>"; };
 		89A981A71524FA6400C405FE /* pro_type.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pro_type.c; sourceTree = "<group>"; };
 		89A981AB1524FA7600C405FE /* pro_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pro_type.h; sourceTree = "<group>"; };
 		89ACBEB6151E960D003EA8EE /* pro_list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pro_list.c; sourceTree = "<group>"; };
@@ -90,7 +87,6 @@
 		89F1111B151CC40100317A20 /* test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = test; path = "prosopon-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89F11126151CC62800317A20 /* libcunit.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcunit.1.dylib; path = ../../../../../usr/local/lib/libcunit.1.dylib; sourceTree = "<group>"; };
 		89F11129151CC90C00317A20 /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
-		89F11138151CEF7D00317A20 /* test-pro_env.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-pro_env.c"; sourceTree = "<group>"; };
 		89F1113B151CF41600317A20 /* test-pro_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-pro_state.c"; sourceTree = "<group>"; };
 		89F9542B152E6F820060B211 /* pro_message_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pro_message_queue.h; sourceTree = "<group>"; };
 		89F9542E152E6FE30060B211 /* pro_message_queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pro_message_queue.c; sourceTree = "<group>"; };
@@ -184,9 +180,7 @@
 			children = (
 				89E29EFB152FE0F90032ABDC /* test.h */,
 				89F11129151CC90C00317A20 /* test.c */,
-				89F11138151CEF7D00317A20 /* test-pro_env.c */,
 				89F1113B151CF41600317A20 /* test-pro_state.c */,
-				89A981901522B4F700C405FE /* test-pro_constructor.c */,
 				89E29EF9152FE0B20032ABDC /* test-pro_message.c */,
 				89AF580815391B95008D8426 /* test-pro_alloc.h */,
 				89AF580A15391BD5008D8426 /* test-pro_alloc.c */,
@@ -310,11 +304,9 @@
 				89F11130151CD14200317A20 /* pro_object.c in Sources */,
 				89F11131151CD14200317A20 /* pro_state.c in Sources */,
 				89F1112B151CC91500317A20 /* test.c in Sources */,
-				89F11139151CEF7D00317A20 /* test-pro_env.c in Sources */,
 				89F1113C151CF41600317A20 /* test-pro_state.c in Sources */,
 				89ACBEB8151E960D003EA8EE /* pro_list.c in Sources */,
 				89A9818B152136FD00C405FE /* pro_library.c in Sources */,
-				89A981921522B4F700C405FE /* test-pro_constructor.c in Sources */,
 				89A981A91524FA6400C405FE /* pro_type.c in Sources */,
 				89F95430152E6FE30060B211 /* pro_message_queue.c in Sources */,
 				89F95433152E862D0060B211 /* pro_messaging.c in Sources */,
