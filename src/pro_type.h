@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_type
-#define prosopon_pro_type
+#ifndef prosopon_core_pro_type
+#define prosopon_core_pro_type
 
 #include "prosopon/core.h"
 #include <prosopon/actor_type.h>

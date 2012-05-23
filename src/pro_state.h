@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_state
-#define prosopon_pro_state
+#ifndef prosopon_core_pro_state
+#define prosopon_core_pro_state
 
 #include "prosopon/core.h"
 

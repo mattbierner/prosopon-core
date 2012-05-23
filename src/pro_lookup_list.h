@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_lookup_list
-#define prosopon_pro_lookup_list
+#ifndef prosopon_core_pro_lookup_list
+#define prosopon_core_pro_lookup_list
 
 #include "prosopon/core.h"
 

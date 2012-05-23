@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_library
-#define prosopon_pro_library
+#ifndef prosopon_core_pro_library
+#define prosopon_core_pro_library
 
 #include "prosopon/core.h"
 

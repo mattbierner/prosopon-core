@@ -1,5 +1,5 @@
-#ifndef prosopon_pro_messaging
-#define prosopon_pro_messaging
+#ifndef prosopon_core_pro_messaging
+#define prosopon_core_pro_messaging
 
 #include "prosopon/core.h"
 
