@@ -48,7 +48,7 @@ static void test_create_invalid(void)
 {
     pro_ref msg;
     pro_error err = pro_list_create(0, &msg);
-    CU_ASSERT(PRO_INVALID_OPERATION == err);
+    CU_ASSERT(PRO_INVALID_STATE == err);
 }
 
 static void test_append(void)
@@ -86,11 +86,7 @@ static void test_append_invalid(void)
 
     // bad state
     err = pro_list_append(0, msg, actor, &msg);
-    CU_ASSERT(PRO_INVALID_OPERATION == err);
-    
-    // bad value
-    err = pro_list_append(state, msg, PRO_EMPTY_REF, &msg);
-    CU_ASSERT(PRO_INVALID_OPERATION == err);
+    CU_ASSERT(PRO_INVALID_STATE == err);
     
     // bad msg
     err = pro_list_append(state, PRO_EMPTY_REF, actor, &msg);
@@ -107,7 +103,7 @@ static void test_length_invalid(void)
     
     // bad state
     err = pro_list_length(0, msg, &len);
-    CU_ASSERT(PRO_INVALID_OPERATION == err);
+    CU_ASSERT(PRO_INVALID_STATE == err);
     
     // bad msg
     err = pro_list_length(state, PRO_EMPTY_REF, &len);
@@ -124,7 +120,7 @@ static void test_get_invalid(void)
     
     // bad state
     err = pro_list_get(0, msg, 0, &result);
-    CU_ASSERT(PRO_INVALID_OPERATION == err);
+    CU_ASSERT(PRO_INVALID_STATE == err);
     
     // bad msg
     err = pro_list_get(state, PRO_EMPTY_REF, 0, &result);

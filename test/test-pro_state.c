@@ -40,7 +40,7 @@ static void test_create_bad_alloc(void)
 static void test_release_invalid(void)
 {
     pro_error err = pro_state_release(0);
-    CU_ASSERT(PRO_INVALID_OPERATION == err);
+    CU_ASSERT(PRO_INVALID_STATE == err);
 }
 
 
