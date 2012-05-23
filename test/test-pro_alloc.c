@@ -27,7 +27,7 @@ void* test_alloc(void* ptr, size_t nsize, void* ud)
         
         size_t* o_ptr = ptr;
         
-        size_t old_size = *((size_t*)o_ptr);
+        size_t old_size = *((size_t*)o_ptr - 1);
         data->allocated -= old_size;
         
         free(o_ptr - 1);

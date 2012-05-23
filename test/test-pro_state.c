@@ -28,6 +28,7 @@ static void test_create(void)
     pro_state_ref s;
     pro_state_create(test_alloc, test_alloc_ud_create(), 0, &s);
     CU_ASSERT(0 != s);
+    pro_state_release(s);
 }
 
 static void test_create_bad_alloc(void)
