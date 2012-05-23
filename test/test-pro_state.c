@@ -14,6 +14,7 @@ static int init(void)
 
 static int cleanup(void)
 {
+
     return 0;
 }
 
@@ -25,14 +26,14 @@ static int cleanup(void)
 static void test_create(void)
 {
     pro_state_ref s;
-    pro_state_create(test_alloc, 0, &s);
+    pro_state_create(test_alloc, test_alloc_ud_create(), 0, &s);
     CU_ASSERT(0 != s);
 }
 
 static void test_create_bad_alloc(void)
 {
     pro_state_ref s;
-    pro_error err = pro_state_create(test_bad_alloc, 0, &s);
+    pro_error err = pro_state_create(test_bad_alloc, 0, 0, &s);
     CU_ASSERT(PRO_OUT_OF_MEMORY == err);
 }
 

@@ -17,7 +17,8 @@ pro_state* pro_state_new(pro_alloc_impl* alloc, void* alloc_ud)
     if (!s) return 0;
     
     s->alloc = alloc;
-
+    s->alloc_ud = alloc_ud;
+    
     s->libraries = 0;
     s->message_queue = pro_message_queue_new(s);
     s->actor_types = 0;
