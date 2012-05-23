@@ -15,9 +15,6 @@
 #endif
 
 
-#pragma mark -
-#pragma Symbols
-
 /**
  * Marks a symbol as part of the public prosopon API. 
  */
