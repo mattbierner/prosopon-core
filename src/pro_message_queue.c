@@ -22,9 +22,7 @@ struct pro_message_node
 static pro_message_node* pro_message_node_new(pro_state_ref s,
     pro_ref message, pro_ref actor, pro_message_node* next)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_message_node* t = alloc(0, sizeof(*t));
+    pro_message_node* t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
 
     t->message = message;
@@ -39,9 +37,7 @@ static pro_message_node* pro_message_node_new(pro_state_ref s,
 PRO_INTERNAL
 pro_message_queue* pro_message_queue_new(pro_state_ref s)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_message_queue* t = alloc(0, sizeof(*t));
+    pro_message_queue* t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
     
     t->front = 0;
@@ -52,13 +48,10 @@ pro_message_queue* pro_message_queue_new(pro_state_ref s)
 PRO_INTERNAL
 void pro_message_queue_free(pro_state_ref s, pro_message_queue* t)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    
     for (pro_message_node* node = t->front; node; node = node->next)
-        alloc(node, 0);
+        pro_alloc(s, node, 0);
         
-    alloc(t, 0);
+    pro_alloc(s, t, 0);
 }
 
 
@@ -94,9 +87,7 @@ pro_ref pro_message_queue_dequeue(pro_state_ref s,
         *actor = front->actor;
         t->front = front->next;
         
-        pro_alloc* alloc;
-        pro_get_alloc(s, &alloc);
-        alloc(front, 0);
+        pro_alloc(s, front, 0);
         
         return msg;
     }

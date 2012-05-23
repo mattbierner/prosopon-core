@@ -10,9 +10,10 @@
 
 #pragma mark Private
 
-static pro_state* pro_state_new(pro_alloc* alloc)
+static
+pro_state* pro_state_new(pro_alloc_impl* alloc, void* alloc_ud)
 {
-    pro_state* s = alloc(0, sizeof(*s));
+    pro_state* s = alloc(0, sizeof(*s), alloc_ud);
     if (!s) return 0;
     
     s->alloc = alloc;
@@ -25,9 +26,11 @@ static pro_state* pro_state_new(pro_alloc* alloc)
 }
 
 
-static void pro_state_free(pro_state* s)
+static
+void pro_state_free(pro_state* s)
 {
-    pro_alloc* alloc = s->alloc;
+    pro_alloc_impl* alloc = s->alloc;
+    void* ud = s->alloc_ud;
     
     if (s->libraries)
         pro_library_list_free(s, s->libraries);
@@ -37,7 +40,7 @@ static void pro_state_free(pro_state* s)
         pro_message_queue_free(s, s->message_queue);
     
     // Free global state structure memory
-    alloc(s, 0);
+    alloc(s, 0, ud);
 }
 
 
@@ -75,11 +78,11 @@ void pro_state_set_actor_type_info(pro_state* s,
 #pragma mark Public
 
 PRO_API
-pro_error pro_state_create(pro_alloc* alloc, const char** path,
+pro_error pro_state_create(pro_alloc_impl* alloc, void* alloc_ud, const char** path,
     PRO_OUT pro_state_ref* out_state)
 {
     // Allocate and setup the global state
-    pro_state* s = pro_state_new(alloc);
+    pro_state* s = pro_state_new(alloc, alloc_ud);
     PRO_API_ASSERT(s, PRO_OUT_OF_MEMORY);
     
     s->path = path;
@@ -95,9 +98,6 @@ pro_error pro_state_release(pro_state_ref s)
 {
     PRO_API_ASSERT_STATE(s);
     
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    
     // Free global state
     pro_state_free(s);
     
@@ -109,10 +109,9 @@ pro_error pro_state_release(pro_state_ref s)
 
 
 PRO_API
-pro_error pro_get_alloc(pro_state_ref s, PRO_OUT pro_alloc** alloc)
+void* pro_alloc(pro_state_ref s, void* ptr, size_t size)
 {
-    *alloc = s->alloc;
-    return PRO_OK;
+    return s->alloc(ptr, size, s->alloc_ud);
 }
 
 

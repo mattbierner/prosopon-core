@@ -11,9 +11,7 @@ PRO_INTERNAL
 pro_lookup* pro_lookup_new(pro_state* s,
     struct pro_object* obj, unsigned int ref_count)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_lookup* t = alloc(0, sizeof(*t));
+    pro_lookup* t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
     
     t->ref_count = ref_count;
@@ -38,15 +36,12 @@ int pro_lookup_equal(pro_state* s,
 PRO_INTERNAL
 void pro_lookup_free(pro_state_ref s, pro_lookup* t)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    
     // Release the object
     pro_object* obj = pro_dereference(s, t);
     pro_object_release(s, obj);
 
     // Free the lookup memory
-    alloc(t, 0);
+    pro_alloc(s, t, 0);
 }
 
 

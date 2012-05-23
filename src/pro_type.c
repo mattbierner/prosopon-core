@@ -41,9 +41,7 @@ PRO_INTERNAL
 pro_actor_type_info_list* pro_actor_type_info_list_new(pro_state_ref s, 
     pro_actor_type type, const pro_actor_type_info* value, pro_actor_type_info_list* next)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_actor_type_info_list* t = alloc(0, sizeof(*t));
+    pro_actor_type_info_list* t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
     
     t->type = type;
@@ -56,13 +54,10 @@ PRO_INTERNAL
 void pro_actor_type_info_list_free(pro_state_ref s,
     pro_actor_type_info_list* t)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    
     for (pro_actor_type_info_list* info = t; info;)
     {
         pro_actor_type_info_list* next = info->next;
-        alloc(info, 0);
+        pro_alloc(s, info, 0);
         info = next;
     }
 }
@@ -105,8 +100,6 @@ pro_actor_type PRO_DEFAULT_ACTOR_TYPE = 0;
 PRO_API void pro_register_actor_type(pro_state_ref s,
     const char* identifier, const pro_actor_type_info* info)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
     pro_actor_type_info_list* list = pro_actor_type_info_list_new(s, identifier, info, 0);
     
     pro_actor_type_info_list* parent = pro_state_get_actor_type_info(s);

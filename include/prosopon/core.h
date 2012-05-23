@@ -155,13 +155,22 @@ PRO_API_DATA pro_actor_type PRO_DEFAULT_ACTOR_TYPE;
  *     If null, new memory is allocated.
  * @param size The size of the new memory block after reallocation. If zero,
  *     The memory is deallocated.
+ * @param ud User data passed to the allocator.
  */
-typedef void*(pro_alloc)(void* ptr, size_t size);
+typedef void*(pro_alloc_impl)(void* ptr, size_t size, void* ud);
+
+
+/**
+ * @see pro_alloc_impl
+ */
+PRO_API
+void* (pro_alloc) (pro_state_ref s, void* ptr, size_t size);
 
 /**
  * Creates a new execution state.
  *
  * @param alloc Memory management function used to allocate and free all memory.
+ * @param alloc_ud Userdata that is passed to the allocator.
  * @param path Array of paths to search for libraries.
  * @param[out] state The newly created state.
  *
@@ -169,7 +178,7 @@ typedef void*(pro_alloc)(void* ptr, size_t size);
  *   PRO_OUT_OF_MEMORY if a new state cannot be allocated.
  */
 PRO_API
-pro_error (pro_state_create) (pro_alloc* alloc, const char** path,
+pro_error (pro_state_create) (pro_alloc_impl* alloc, void* alloc_ud, const char** path,
     PRO_OUT pro_state_ref* state);
 
 /**
@@ -189,7 +198,7 @@ pro_error (pro_run) (pro_state_ref);
  */
 PRO_API
 pro_error (pro_get_alloc) (pro_state_ref,
-    PRO_OUT pro_alloc** alloc);
+    PRO_OUT pro_alloc_impl** alloc);
 
 /**
  * Retains a reference for further use.

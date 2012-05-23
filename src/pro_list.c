@@ -6,12 +6,6 @@
 #include "pro_lookup_list.h"
 
 
-#pragma mark Private
-
-#pragma mark -
-#pragma mark Internal
-
-
 #pragma mark -
 #pragma mark Public
 
@@ -68,7 +62,7 @@ pro_error pro_list_append(pro_state_ref s,
 {
     PRO_API_ASSERT_STATE(s);
     PRO_API_ASSERT_TYPE(msg, PRO_LIST_TYPE, PRO_INVALID_OPERATION);
-    //PRO_API_ASSERT(msg != *new_msg_out, );
+    PRO_API_ASSERT(msg != *new_msg_out, PRO_INVALID_OPERATION);
     
     // retain the appended object
     pro_retain(s, ref);
@@ -80,11 +74,11 @@ pro_error pro_list_append(pro_state_ref s,
     // build the new list
     pro_object* obj = pro_dereference(s, msg);
     pro_object* new_obj = pro_dereference(s, new_msg);
-    new_obj->value.message = pro_lookup_list_copy(s, obj->value.message);
-    if (!new_obj->value.message)
-        new_obj->value.message = pro_lookup_list_new(s);
+    pro_ref_list lookups = obj->value.message;
+    new_obj->value.message = (lookups ? pro_lookup_list_copy(s, lookups) : pro_lookup_list_new(s));
     pro_lookup_list_append(s, new_obj->value.message, ref);
-        
+    
+    // write result
     *new_msg_out = new_msg;
     return PRO_OK;
 }

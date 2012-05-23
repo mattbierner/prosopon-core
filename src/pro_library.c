@@ -83,9 +83,7 @@ PRO_INTERNAL
 pro_library_list* pro_library_list_new(pro_state_ref s,
     const char* file, pro_library_list* next)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_library_list* t = alloc(0, sizeof(*t));
+    pro_library_list* t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
     
     t->next = next;
@@ -106,14 +104,11 @@ int pro_library_loaded(pro_state_ref s, const char* file)
 PRO_INTERNAL
 void pro_library_list_free(pro_state_ref s, pro_library_list* libraries)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    
     for (pro_library_list* lib = libraries; lib; )
     {
         pro_library_list* next = lib->next;
         dlclose(lib->handle);
-        alloc(lib, 0);
+        pro_alloc(s, lib, 0);
         lib = next;
     }
 }

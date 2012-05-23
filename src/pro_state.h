@@ -15,8 +15,9 @@ struct pro_actor_type_info_list;
 typedef struct pro_state pro_state;
 struct pro_state
 {
-    pro_alloc* alloc; /**< Allocator used to allocate and free all memory. */
-    
+    pro_alloc_impl* alloc; /**< Allocator used to allocate and free all memory. */
+    void* alloc_ud; /**< User data passed to allocator. */
+
     struct pro_library_list* libraries; /**< The set of loaded libraries. */
     
     struct pro_actor_type_info_list* actor_types; /**< The set of actor types. */

@@ -19,9 +19,7 @@ struct pro_lookup_list
 static pro_lookup_list_node* pro_lookup_list_node_new(pro_state_ref s,
     pro_ref value, pro_lookup_list_node* next)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_lookup_list_node* t = alloc(0, sizeof(*t));
+    pro_lookup_list_node* t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
     
     t->value = value;
@@ -37,9 +35,7 @@ static pro_lookup_list_node* pro_lookup_list_node_new(pro_state_ref s,
 PRO_INTERNAL
 pro_ref_list pro_lookup_list_new(pro_state_ref s)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_ref_list t = alloc(0, sizeof(*t));
+    pro_ref_list t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
     
     t->size = 0;
@@ -52,9 +48,6 @@ void pro_lookup_list_free(pro_state_ref s, pro_ref_list t)
 {
     if (!t) return;
     
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    
     for (pro_lookup_list_node* item = t->front; item;)
     {
         pro_lookup_list_node* next = item->next;
@@ -63,12 +56,12 @@ void pro_lookup_list_free(pro_state_ref s, pro_ref_list t)
         pro_release(s, item->value);
         
         // Free the item structure
-        alloc(item, 0);
+        pro_alloc(s, item, 0);
         
         item = next;
     }
     
-    alloc(t, 0);
+    pro_alloc(s, t, 0);
 }
 
 

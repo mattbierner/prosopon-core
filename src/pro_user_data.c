@@ -14,9 +14,7 @@
 
 PRO_API void PRO_DEFAULT_UD_DECONSTRUCTOR(pro_state_ref s, void* data)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    alloc(data, 0);
+    pro_alloc(s, data, 0);
 }
 
 PRO_API
@@ -24,13 +22,10 @@ pro_error pro_ud_create(pro_state_ref s,
     size_t size, pro_ud_deconstructor* deconstructor, PRO_OUT pro_ref* t)
 {
     PRO_API_ASSERT_STATE(s);
-
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
     
     pro_object* obj = obj = pro_object_new(s, PRO_UD_TYPE, 1);
     obj->value.ud.size = size;
-    obj->value.ud.data = size > 0 ? alloc(0, size) : 0;
+    obj->value.ud.data = size > 0 ? pro_alloc(s, 0, size) : 0;
     obj->value.ud.deconstructor = deconstructor;
     
     pro_ref ref = pro_lookup_new(s, obj, 1);

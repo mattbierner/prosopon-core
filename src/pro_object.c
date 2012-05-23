@@ -11,9 +11,7 @@ PRO_INTERNAL
 pro_object* pro_object_new(pro_state_ref s,
     pro_type type, unsigned int ref_count)
 {
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    pro_object* t = alloc(0, sizeof(*t));
+    pro_object* t = pro_alloc(s, 0, sizeof(*t));
     if (!t) return 0;
     
     t->type = type;
@@ -42,9 +40,7 @@ void pro_object_free(pro_state_ref s, pro_object* t)
     }
     
     // Free the pro_object
-    pro_alloc* alloc;
-    pro_get_alloc(s, &alloc);
-    alloc(t, 0);
+    pro_alloc(s, t, 0);
 }
 
 
