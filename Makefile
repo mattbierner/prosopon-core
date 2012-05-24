@@ -77,6 +77,9 @@ $(BUILD_DIR)/%.o : $(TEST_DIR)/%.c
 doc :
 	doxygen Doxyfile
 
+.PHONY : ghdoc
+ghdoc :
+	doxygen gh-pages-Doxyfile
 
 
 .PHONY : clean
