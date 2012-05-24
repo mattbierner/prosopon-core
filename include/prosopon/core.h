@@ -1,6 +1,11 @@
 #ifndef prosopon_core_core
 #define prosopon_core_core
 
+/**
+ * @file core.h
+ * @brief Declares Prosopon-Core's core actor model functionality.
+ */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -9,85 +14,44 @@ extern "C" {
 
 #include <stddef.h>
 
-/**
- * @section memory_sec Memory Management
- *
- * All Prosopon objects (pro_state_ref, pro_env_ref, pro_ref), are memory 
- * managed using manual reference counting. It is the programmer's responsibility
- * to correctly manage memory in order to prevent memory leaks and memory
- * access bugs.
- *
- * API functions involving memory management make not of how they change reference
- * counts or the reference count of objects they return.
- *
- * The following general points are good guidelines for manageing memory: 
- * * Any object that will be used further must be retained. Many API functions
- *   return retained objects.
- * * Any object you are done using should be released.
- * * Every retaining statement should have a matching release. Returned parementers
- *   must always be released if not used.
- * * Release != Free, memory may not be freed when release is called even if the
- *   reference count is zero. It will always eventually be freed.
- */
-
-
-/**
- * Marks a parameter as output. 
- */
-#define PRO_OUT
-
-
 
 #pragma mark Error
-/**
- * @section error_sec Error Handling
- *
- * Every API call returns an error code to report problems. This is PRO_OK when
- * no errors occur. Instead of crashing API functions will return error codes.
- *
- * It is the programmer's responsibilty to check the returned error codes and
- * handle any error appropriately. Failure to handle an error for one call
- * may effect later calls and the exected behavior of the program.
- *
- * Unless otherwise noted, each API call returns PRO_OK if successful or
- * PRO_INVALID_STATE if the state was not valid.
- */
 
 /**
  * Information about the error an API call generated.
  */
 typedef enum
 {
+    PRO_OK = 0,
     /**<
      * The API call completed as expected
      */
-    PRO_OK = 0,
     
+    PRO_OUT_OF_MEMORY,
     /**<
      * The library failed to allocate more memory to complete the call.
      */
-    PRO_OUT_OF_MEMORY,
-    
+     
+    PRO_LIBRARY_LOAD_ERROR,
     /**<
      * There was an error loading an Prosopon library.
      */
-    PRO_LIBRARY_LOAD_ERROR,
-    
+     
+    PRO_INVALID_STATE,
     /**<
      * The referenced state is not valid.
      */
-    PRO_INVALID_STATE,
     
+    PRO_INVALID_OPERATION,
     /**<
      * The requested operation is not valid.
      */
-    PRO_INVALID_OPERATION,
-    
+     
+    PRO_BEHAVIOR_ERROR,
     /**<
      *
      */
-    PRO_BEHAVIOR_ERROR,
-    
+     
     PRO_ERROR_MAX
 } pro_error;
 
@@ -147,7 +111,7 @@ PRO_API_DATA pro_actor_type PRO_DEFAULT_ACTOR_TYPE;
 #pragma mark State
 
 /**
- * Function to allocate and deallocate memory
+ * Function that implements memory allocation and deallocation.
  * 
  * Based on lua_Alloc and similar to realloc.
  *
@@ -161,6 +125,8 @@ typedef void*(pro_alloc_impl)(void* ptr, size_t size, void* ud);
 
 
 /**
+ * Allocate and dellocate memory.
+ *
  * @see pro_alloc_impl
  */
 PRO_API
@@ -224,24 +190,24 @@ pro_error (pro_get_type) (pro_state_ref,
     pro_ref lookup, PRO_OUT pro_type* type);
 
 /**
- * Enum for status of a match. operation
+ * Enum for status of a match operation.
  */
 typedef enum 
 {
+    PRO_MATCH_FAIL = 0,
     /**<
      * The match failed and is complete.
      */
-    PRO_MATCH_FAIL = 0,
-    
+        
+    PRO_MATCH_SUCCEED,
     /**<
      * The match succeed and is complete.
      */
-    PRO_MATCH_SUCCEED,
-    
+
+    PRO_MATCH_CONTINUE
     /**
      * The match succeed and will continue.
      */
-    PRO_MATCH_CONTINUE
 } pro_matching;
 
 /**

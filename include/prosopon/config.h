@@ -4,7 +4,10 @@
 /** 
  * @file config.h
  * @brief Configuration file for prosopon-core build and runtime.
+ *
+ * Defines global constants and macros.
  */
+
 
 #pragma mark Symbols
 
@@ -38,7 +41,14 @@
 #define PRO_INTERNAL extern PRO_VISIBILITY_PRIVATE
 
 
+/**
+ * Marks a parameter as output. 
+ */
+#define PRO_OUT
+
+
 #pragma mark -
 #pragma mark Constants
+
 
 #endif

@@ -1,24 +1,22 @@
 #ifndef prosopon_core_library
 #define prosopon_core_library
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <prosopon/core.h>
-
-
 /**
  * @file library.h
- * @brief Support for loading Prosopon libraries at runtime.
+ * @brief Runtime Prosopon library loading support.
  */
- 
+
 /**
  * @section prosopon-libraries Prosopon Libraries
  *
  *
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <prosopon/core.h>
 
 #pragma mark -
 #pragma mark Library
