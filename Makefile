@@ -79,7 +79,9 @@ doc :
 
 .PHONY : ghdoc
 ghdoc :
-	doxygen gh-pages-Doxyfile
+	if [ -f gh-pages ]; then rm -rf gh-pages/*; fi
+	doxygen Doxyfile
+	cp -r ./doc/html/* ./gh-pages/
 
 
 .PHONY : clean
