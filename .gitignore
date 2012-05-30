@@ -3,6 +3,27 @@
 *~
 *.tmp*
 *.orig
+*.cache
+*.log
+
+# Autotools #
+#############
+*.in
+.deps
+aclocal.m4
+config.guess
+config.h
+config.h.in
+configure
+config.sub
+config.status
+depcomp
+install-sh
+libtool
+ltmain.sh
+missing
+stamp-h1
+Makefile
 
 # Build #
 #########
