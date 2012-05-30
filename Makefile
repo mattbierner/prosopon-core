@@ -28,7 +28,7 @@ LIBPROSOPON = libprosopon.la
 PROSOPON_HEADER_DIR = $(includedir)/prosopon
 
 
-OBJS = pro_actor pro_list pro_env pro_lookup pro_object pro_state pro_constructor pro_library pro_message_queue pro_type pro_env_stack pro_user_data pro_messaging pro_lookup_list pro_lookup_table pro_binding_map pro_env_lookup
+OBJS = pro_actor pro_list pro_lookup pro_object pro_state pro_library pro_message_queue pro_type pro_user_data pro_messaging pro_lookup_list
 
 OUT_OBJS = $(addprefix $(BUILD_DIR)/,$(OBJS))
 
