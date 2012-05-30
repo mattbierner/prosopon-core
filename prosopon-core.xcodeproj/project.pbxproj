@@ -63,7 +63,7 @@
 		890024CF1511A3070012E749 /* pro_object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pro_object.h; sourceTree = "<group>"; };
 		890024D01511A3070012E749 /* pro_state.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pro_state.c; sourceTree = "<group>"; };
 		890024D11511A3070012E749 /* pro_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pro_state.h; sourceTree = "<group>"; };
-		890024E81511A3430012E749 /* libprosopon-core.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libprosopon-core.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		890024E81511A3430012E749 /* libprosopon.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libprosopon.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		892919EC155225DC00A176B8 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
 		8972965B154CEE2F00771769 /* actor_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = actor_type.h; sourceTree = "<group>"; };
 		8972965C154CEE2F00771769 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 		89DD609A14FC755D0072ADE5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				890024E81511A3430012E749 /* libprosopon-core.dylib */,
+				890024E81511A3430012E749 /* libprosopon.dylib */,
 				89F1111B151CC40100317A20 /* test */,
 			);
 			name = Products;
@@ -230,7 +230,7 @@
 			);
 			name = prosopon;
 			productName = prosopon;
-			productReference = 890024E81511A3430012E749 /* libprosopon-core.dylib */;
+			productReference = 890024E81511A3430012E749 /* libprosopon.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 		89F1111A151CC40100317A20 /* prosopon-tests */ = {
@@ -326,7 +326,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				PRODUCT_NAME = "prosopon-core";
+				PRODUCT_NAME = prosopon;
 				SYMROOT = "$(PROSOPON_ROOT_DIR)/build";
 			};
 			name = Debug;
@@ -336,7 +336,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				PRODUCT_NAME = "prosopon-core";
+				PRODUCT_NAME = prosopon;
 				SYMROOT = "$(PROSOPON_ROOT_DIR)/build";
 			};
 			name = Release;

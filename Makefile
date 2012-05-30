@@ -32,7 +32,7 @@ OBJS = pro_actor pro_list pro_lookup pro_object pro_state pro_library pro_messag
 
 OUT_OBJS = $(addprefix $(BUILD_DIR)/,$(OBJS))
 
-HEADERS = prosopon.h actor_type.h config.h library.h core.h
+HEADERS = prosopon.h actor_type.h config.h library.h core.h macros.h
 OUT_HEADERS = $(addprefix $(SRC_INCLUDE_DIR)/,$(HEADERS))
 
 
